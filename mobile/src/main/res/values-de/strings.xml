@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Einstellungen</string>
+    <string name="auth_text">Bildschirmsperre bestätigen, um zu entsperren</string>
+    <string name="unlock">Entsperren</string>
+</resources>
