@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "net.nghorst.l.tim.rust"
+        applicationId "com.gitlab.PCU.PCU"
         minSdkVersion 23
         targetSdkVersion 25
         versionCode 1
