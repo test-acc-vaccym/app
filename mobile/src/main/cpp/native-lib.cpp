@@ -3,7 +3,7 @@
 
 extern "C"
 jstring
-Java_net_nghorst_l_tim_rust_MainScreen_stringFromJNI(
+Java_com_gitlab_PCU_PCU_MainScreen_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++\n(yay)";
