@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 24
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.gitlab.PCU.PCU"
         minSdkVersion 23
-        targetSdkVersion 25
+        //noinspection OldTargetApi
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
