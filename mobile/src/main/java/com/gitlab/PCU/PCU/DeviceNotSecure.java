@@ -163,10 +163,9 @@ public class DeviceNotSecure extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        System.exit(1);
     }
 
     public void exit(View v) {
-        System.exit(1);
+        finish();
     }
 }

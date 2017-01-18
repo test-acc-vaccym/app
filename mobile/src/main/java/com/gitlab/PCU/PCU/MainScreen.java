@@ -19,7 +19,7 @@ import com.gitlab.PCU.PCU.helper.ip;
 public class MainScreen extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK = 1;
-    private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_SETTINGS = 2;
+    private static final int REQUEST_CODE_SETTINGS = 2;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -35,7 +35,6 @@ public class MainScreen extends AppCompatActivity {
         if (!mKeyguardManager.isDeviceSecure()) {
             Intent intent = new Intent(this, DeviceNotSecure.class);
             startActivity(intent);
-            System.exit(1);
         }
         setContentView(R.layout.activity_main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,7 +63,7 @@ public class MainScreen extends AppCompatActivity {
                     Toast.makeText(this, "Canceled", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_SETTINGS:
+            case REQUEST_CODE_SETTINGS:
                 if (resultCode == RESULT_OK) {
                     Intent intent = new Intent(this, SettingsActivity.class);
                     startActivity(intent);
@@ -105,13 +104,12 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void onClickSettings(MenuItem item) {
-        showAuthenticationScreen(REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_SETTINGS);
+        showAuthenticationScreen(REQUEST_CODE_SETTINGS);
     }
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    //public native String do_auth(ip:server_ip);
+    public native boolean do_auth();
 }
-

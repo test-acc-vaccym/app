@@ -20,7 +20,11 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Toast;
 
+import com.gitlab.PCU.PCU.helper.ServerCfg;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -171,7 +175,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || ServersPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -271,18 +276,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class ServersPreferenceFragment extends PreferenceFragment {
+
+        ServerCfg server_cfg;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_servers);
             setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("servers_list"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
+            try {
+                server_cfg = new ServerCfg(getContext());
+            } catch (IOException e) {
+                Toast.makeText(getContext(), "Well you have an unlucky day, an IOError occurred", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                e.printStackTrace();
+                System.exit(1);
+            }
+            Toast.makeText(getContext(), server_cfg.get_content(), Toast.LENGTH_LONG).show();
         }
 
         @Override

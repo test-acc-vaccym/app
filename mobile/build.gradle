@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.gitlab.PCU.PCU"
-        minSdkVersion 23
+        minSdkVersion 24
         //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 1
