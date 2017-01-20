@@ -16,7 +16,8 @@ public final class ServerSettingsStore {
         return name;
     }
 
-    public void setName(String name) {
+    public ServerSettingsStore setName(String name) {
         this.name = name;
+        return this;
     }
 }
