@@ -2,7 +2,6 @@ package com.gitlab.PCU.PCU;
 
 
 import android.annotation.TargetApi;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -22,13 +20,7 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.gitlab.PCU.PCU.helper.ServerCfg;
-
-import java.io.IOException;
 import java.util.List;
 
 /**

@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,26 +18,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.gitlab.PCU.PCU.helper.StaticContent;
 import com.gitlab.PCU.PCU.helper.ServerCfg;
 import com.gitlab.PCU.PCU.helper.ServerSettingsStore;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ServerSettingsActivity extends AppCompatActivity {
 
-    public ArrayList<ServerSettingsStore> serverSettingsStores = new ArrayList<>();
-    public boolean fresh = true;
+    private SharedPreferences sharedPreferences;
+    private ArrayList<ServerSettingsStore> serverSettingsStores = new ArrayList<>();
+    private boolean fresh = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        serverSettingsStores = new ArrayList<>();
-        try {
-            ServerCfg.read(getApplicationContext(), serverSettingsStores);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sharedPreferences = getSharedPreferences(StaticContent.SERVER_PREF_SP_KEY, StaticContent.SP_MODE);
+        serverSettingsStores = ServerCfg.read(sharedPreferences);
         makeServerInView(serverSettingsStores);
         setContentView(R.layout.activity_server_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,12 +51,7 @@ public class ServerSettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (!fresh) {
-            serverSettingsStores = new ArrayList<>();
-            try {
-                ServerCfg.read(getApplicationContext(), serverSettingsStores);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            serverSettingsStores = ServerCfg.read(sharedPreferences);
         } else {
             fresh = false;
         }
@@ -67,16 +60,12 @@ public class ServerSettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        try {
+        /*try {
             ServerCfg.write(getApplicationContext(), serverSettingsStores);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        serverSettingsStores = new ArrayList<>();
-    }
-
-    protected boolean isValidFragment(String fragmentName) {
-        return SingleServerSettingsFragment.class.getName().equals(fragmentName);
+        serverSettingsStores = new ArrayList<>();*/
     }
 
     public static class SingleServerSettingsFragment extends DialogFragment {
@@ -119,9 +108,20 @@ public class ServerSettingsActivity extends AppCompatActivity {
 
     }
 
-    public void makeServerInView(ArrayList<ServerSettingsStore> serverSettingsStores) {
+    private void makeServerInView(ArrayList<ServerSettingsStore> serverSettingsStores) {
+
+        for (ServerSettingsStore serverSettingsStore : serverSettingsStores) {
+            registerServer(serverSettingsStore);
+        }
+    }
+
+    private void registerServer(final ServerSettingsStore serverSettingsStore) {
         final Context context = getApplicationContext();
-        final LinearLayout ll = (LinearLayout) findViewById(R.id.content_server_settings);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.content_server_settings_ll);
+        if (ll == null) {
+            System.out.println("ll is null");
+            return;
+        }
         final View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,36 +139,18 @@ public class ServerSettingsActivity extends AppCompatActivity {
                 sssf.show(ft, "dialog");
             }
         };
-        for (ServerSettingsStore serverSettingsStore : serverSettingsStores) {
-            Button b = new Button(context);
-            b.setText(serverSettingsStore.getName());
-            b.setOnClickListener(onClickListener);
-            ll.addView(b);
-        }
+
+
+        Button b = new Button(context);
+        b.setText(serverSettingsStore.getName());
+        b.setOnClickListener(onClickListener);
+        ll.addView(b);
     }
 
     public void onClickFabServerSettings(View view) {
         Snackbar.make(view, "Added new Server", Snackbar.LENGTH_LONG).show();
-        Button b = new Button(getApplicationContext());
-        b.setText(getString(R.string.default_name));
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button button = (Button) v;
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                SingleServerSettingsFragment sssf = new SingleServerSettingsFragment();
-                ServerSettingsStore sss = new ServerSettingsStore(button.getText().toString());
-                sssf.setArguments(sss, button);
-                sssf.show(ft, "dialog");
-            }
-        });
-        LinearLayout ll = (LinearLayout) findViewById(R.id.content_server_settings);
-        ll.addView(b);
+        ServerSettingsStore serverSettingsStore = new ServerSettingsStore(getString(R.string.default_name));
+        serverSettingsStores.add(serverSettingsStore);
+        registerServer(serverSettingsStore);
     }
 }
