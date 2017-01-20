@@ -34,6 +34,15 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_device_not_secure"
             android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".ServerSettingsActivity"
+            android:label="@string/title_activity_server_settings"
+            android:parentActivityName=".MainScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gitlab.PCU.PCU.MainScreen" />
+        </activity>
     </application>
 
 </manifest>

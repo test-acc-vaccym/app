@@ -90,4 +90,6 @@
     <string name="title_activity_device_not_secure">Device not secure</string>
     <string name="pref_server">Servers</string>
     <string name="server_list">Server List</string>
+    <string name="title_activity_server_settings">Server Settings</string>
+    <string name="default_name">Server name</string>
 </resources>

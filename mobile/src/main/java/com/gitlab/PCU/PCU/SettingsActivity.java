@@ -2,6 +2,7 @@ package com.gitlab.PCU.PCU;
 
 
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -20,6 +22,8 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.gitlab.PCU.PCU.helper.ServerCfg;
@@ -175,8 +179,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || ServersPreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -257,42 +260,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    /**
-     * This fragment shows Server preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class ServersPreferenceFragment extends PreferenceFragment {
-
-        ServerCfg server_cfg;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_servers);
-            setHasOptionsMenu(true);
-            try {
-                server_cfg = new ServerCfg(getContext());
-            } catch (IOException e) {
-                Toast.makeText(getContext(), "Well you have an unlucky day, an IOError occurred", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                e.printStackTrace();
-                System.exit(1);
-            }
-            Toast.makeText(getContext(), server_cfg.get_content(), Toast.LENGTH_LONG).show();
         }
 
         @Override

@@ -16,9 +16,5 @@
         android:fragment="com.gitlab.PCU.PCU.SettingsActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync" />
-    <header
-        android:fragment="com.gitlab.PCU.PCU.SettingsActivity$ServersPreferenceFragment"
-        android:icon="@drawable/ic_cast_light"
-        android:title="@string/pref_server" />
 
 </preference-headers>

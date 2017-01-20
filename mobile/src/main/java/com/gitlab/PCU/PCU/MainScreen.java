@@ -4,8 +4,6 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,20 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.gitlab.PCU.PCU.helper.ip;
-
-
 public class MainScreen extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK = 1;
     private static final int REQUEST_CODE_SETTINGS = 2;
-
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
+    private static final int REQUEST_CODE_SERVER_SETTINGS = 3;
 
     private KeyguardManager mKeyguardManager;
+    private Intent serverSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +28,10 @@ public class MainScreen extends AppCompatActivity {
             Intent intent = new Intent(this, DeviceNotSecure.class);
             startActivity(intent);
         }
+        serverSettings = new Intent(this, SettingsActivity.class);
         setContentView(R.layout.activity_main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_unlock);
-        View.OnClickListener fab_listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAuthenticationScreen(REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
-            }
-        };
-        fab.setOnClickListener(fab_listener);
-        // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(R.string.tv_default);
     }
 
     @Override
@@ -65,7 +46,12 @@ public class MainScreen extends AppCompatActivity {
                 break;
             case REQUEST_CODE_SETTINGS:
                 if (resultCode == RESULT_OK) {
-                    Intent intent = new Intent(this, SettingsActivity.class);
+                    startActivity(serverSettings);
+                }
+                break;
+            case REQUEST_CODE_SERVER_SETTINGS:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = new Intent(this, ServerSettingsActivity.class);
                     startActivity(intent);
                 }
                 break;
@@ -107,9 +93,11 @@ public class MainScreen extends AppCompatActivity {
         showAuthenticationScreen(REQUEST_CODE_SETTINGS);
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native boolean do_auth();
+    public void onClickServerSettings(MenuItem item) {
+        showAuthenticationScreen(REQUEST_CODE_SERVER_SETTINGS);
+    }
+
+    public void onClickFabMain(View view) {
+        showAuthenticationScreen(REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
+    }
 }

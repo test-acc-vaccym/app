@@ -32,6 +32,6 @@
         app:srcCompat="@drawable/ic_fingerprint_green_24dp"
         app:backgroundTint="@color/white"
         app:fabSize="auto"
-        android:onClick="" />
+        android:onClick="onClickFabMain" />
 
 </android.support.design.widget.CoordinatorLayout>
