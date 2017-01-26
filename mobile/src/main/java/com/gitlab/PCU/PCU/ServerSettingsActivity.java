@@ -1,44 +1,34 @@
 package com.gitlab.PCU.PCU;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.ArrayMap;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.gitlab.PCU.PCU.helper.DFCompound;
-import com.gitlab.PCU.PCU.helper.StaticContent;
+import com.gitlab.PCU.PCU.helper.Defaults;
 import com.gitlab.PCU.PCU.helper.ServerCfg;
 import com.gitlab.PCU.PCU.helper.ServerSettingsStore;
 
+import java.util.ArrayList;
 import java.util.Map;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ServerSettingsActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
-    private ArrayMap<String, ServerSettingsStore> serverSettingsStores = new ArrayMap<>();
-    private boolean fresh = true;
+    private ArrayList<View> childs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_settings);
-        sharedPreferences = getSharedPreferences(StaticContent.SERVER_PREF_SP_KEY, StaticContent.SP_MODE);
-        serverSettingsStores = ServerCfg.read(sharedPreferences);
-        makeServerInView(serverSettingsStores);
+        createViews();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         try {
@@ -49,104 +39,108 @@ public class ServerSettingsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!fresh) {
-            serverSettingsStores = ServerCfg.read(sharedPreferences);
-        } else {
-            fresh = false;
+    private void createViews() {
+        for (View child : childs) {
+            ((ViewGroup) child.getParent()).removeView(child);
         }
+
+        childs = new ArrayList<>();
+
+        ArrayMap<String, String[]> list = ServerCfg.list(getSharedPreferences("servers", 0));
+
+        Context context = getApplicationContext();
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.content_server_settings_ll);
+
+        for (Map.Entry<String, String[]> listEntry : list.entrySet()) {
+            TextView name = new TextView(context);
+            name.setText(listEntry.getValue()[0]);
+            TextView info = new TextView(context);
+            info.setText(listEntry.getValue()[1]);
+            String id = listEntry.getKey();
+            addServerView(name, info, linearLayout, id);
+        }
+    }
+
+    private void addServerView(TextView name, TextView info, LinearLayout linearLayout, String serverId) {
+        if (linearLayout.getChildCount() > 0) {
+            View spacer = new View(getApplicationContext());
+            spacer.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, 2));
+            spacer.setBackgroundColor(getResources().getColor(R.color.colorLightGray, getTheme()));
+            linearLayout.addView(spacer);
+            childs.add(spacer);
+        }
+
+        name.setTextSize(18);
+        info.setTextSize(14);
+
+        info.setTextColor(getResources().getColor(R.color.colorLightGray, getTheme()));
+
+        EditOCL editOCL = new EditOCL(serverId);
+
+        name.setOnClickListener(editOCL);
+        info.setOnClickListener(editOCL);
+
+        linearLayout.addView(name);
+        childs.add(name);
+        linearLayout.addView(info);
+        childs.add(info);
+    }
+
+    public void onFab(View v) {
+        Context context = getApplicationContext();
+        ArrayMap<String, String[]> arrayMap = ServerCfg.list(getSharedPreferences("servers", 0));
+        int i = arrayMap.size();
+        while (arrayMap.containsKey("Server" + Integer.toString(i))) {
+            i++;
+        }
+        String id = "Server" + Integer.toString(i);
+        ServerSettingsStore serverSettingsStore = new Defaults.ServerVariable(context).SERVER_SETTINGS_STORE;
+        ServerCfg.write(getSharedPreferences("servers", 0), id, serverSettingsStore);
+        TextView name = new TextView(context);
+        name.setText(serverSettingsStore.getName());
+        TextView info = new TextView(context);
+        info.setText(serverSettingsStore.getDesc());
+        addServerView(name, info, (LinearLayout) findViewById(R.id.content_server_settings_ll), id);
+    }
+
+    private void startEdit(ServerSettingsStore serverSettingsStore, String serverId) {
+        Intent intent = new Intent(getApplicationContext(), SingleServerSettings.class);
+        intent.putExtra("in", serverSettingsStore);
+        intent.putExtra("id", serverId);
+        startActivityForResult(intent, Defaults.RequestCode.EDIT_SERVER);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        ServerCfg.write(sharedPreferences, serverSettingsStores);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Defaults.RequestCode.EDIT_SERVER:
+                if (resultCode == RESULT_OK && data != null) {
+                    ServerSettingsStore serverSettingsStore = data.getParcelableExtra("out");
+                    String id = data.getStringExtra("id");
+                    ServerCfg.write(getSharedPreferences("servers", 0), id, serverSettingsStore);
+                    createViews();
+                }
+                break;
+        }
     }
 
-    public static class SingleServerSettingsFragment extends DialogFragment {
+    private class EditOCL implements View.OnClickListener {
 
-        private DFCompound dfCompound;
+        private final String id;
 
-        public void setArguments(DFCompound dfCompound) {
-            this.dfCompound = dfCompound;
+        EditOCL(String id) {
+            this.id = id;
         }
 
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onClick(View v) {
+            startEdit(ServerCfg.read(getSharedPreferences("servers", 0), new Defaults.ServerVariable(getApplicationContext()), id), id);
         }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            LinearLayout v = (LinearLayout) inflater.inflate(R.layout.single_server_settings, container, false);
-            EditText et = new EditText(getContext());
-            et.setText(dfCompound.getServerSettingsStore().getName());
-            et.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    dfCompound.getButton().setText(s);
-                    ServerSettingsStore serverSettingsStore = dfCompound.getServerSettingsStore().setName(s.toString());
-                    dfCompound.getServerSettingsStores().put(serverSettingsStore.getName(), serverSettingsStore);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-            v.addView(et);
-            return v;
-        }
-
-    }
-
-    private void makeServerInView(ArrayMap<String, ServerSettingsStore> serverSettingsStoreArrayMap) {
-
-        for (Map.Entry<String, ServerSettingsStore> serverSettingsStoreEntry : serverSettingsStoreArrayMap.entrySet()) {
-            registerServer(serverSettingsStoreEntry.getValue(), serverSettingsStoreArrayMap);
-        }
-    }
-
-    public void registerServer(final ServerSettingsStore serverSettingsStore, final ArrayMap<String, ServerSettingsStore> serverSettingsStores) {
-        final Context context = getApplicationContext();
-        LinearLayout ll = (LinearLayout) findViewById(R.id.content_server_settings_ll);
-        if (ll == null) {
-            return;
-        }
-        final View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button button = (Button) v;
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                SingleServerSettingsFragment sssf = new SingleServerSettingsFragment();
-                ServerSettingsStore sss = new ServerSettingsStore(button.getText().toString());
-                DFCompound dfCompound = new DFCompound(sss, button, serverSettingsStores);
-                sssf.setArguments(dfCompound);
-                sssf.show(ft, "dialog");
-            }
-        };
-
-        Button b = new Button(context);
-        b.setText(serverSettingsStore.getName());
-        b.setOnClickListener(onClickListener);
-        ll.addView(b);
-    }
-
-    public void onClickFabServerSettings(View view) {
-        Snackbar.make(view, "Added new Server", Snackbar.LENGTH_LONG).show();
-        ServerSettingsStore serverSettingsStore = new ServerSettingsStore(getString(R.string.default_name));
-        serverSettingsStores.put(serverSettingsStore.getName(), serverSettingsStore);
-        registerServer(serverSettingsStore, serverSettingsStores);
     }
 }

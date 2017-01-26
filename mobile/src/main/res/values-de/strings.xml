@@ -24,5 +24,7 @@
     </string-array>
     <string name="title_activity_server_settings">Server Einstellungen</string>
     <string name="default_name">Server Name</string>
+    <string name="title_activity_server_edit">Server Beabeiten</string>
+    <string name="default_desc">Keine Beschreibung</string>
 
 </resources>

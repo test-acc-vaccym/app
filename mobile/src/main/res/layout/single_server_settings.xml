@@ -1,10 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!--<EditText android:id="@+id/edit_name"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/edit_server">
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/default_name" />-->
+        android:hint="@string/default_name"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:id="@+id/ip_a"
+            android:layout_weight="1.0"
+            tools:ignore="LabelFor"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:id="@+id/ip_b"
+            android:layout_weight="1.0"
+            tools:ignore="LabelFor"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:id="@+id/ip_c"
+            android:layout_weight="1.0"
+            tools:ignore="LabelFor"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:id="@+id/ip_d"
+            android:layout_weight="1.0"
+            tools:ignore="LabelFor"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/edit_desc"
+        android:layout_weight="1.0"
+        tools:ignore="LabelFor"/>
+
+    <Button
+        android:id="@+id/edit_server_accept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/accept"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/edit_server_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/cast_tracks_chooser_dialog_cancel"
+        android:textAlignment="center"/>
+
 </LinearLayout>

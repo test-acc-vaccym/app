@@ -92,4 +92,6 @@
     <string name="server_list">Server List</string>
     <string name="title_activity_server_settings">Server Settings</string>
     <string name="default_name">Server name</string>
+    <string name="title_activity_server_edit">Edit Server</string>
+    <string name="default_desc">No description</string>
 </resources>

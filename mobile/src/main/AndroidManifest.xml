@@ -41,8 +41,16 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gitlab.PCU.PCU.MainScreen" />
+                android:value=".MainScreen"/>
+        </activity>
+        <activity
+            android:name=".SingleServerSettings"
+            android:label="@string/title_activity_server_edit"
+            android:parentActivityName=".ServerSettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ServerSettingsActivity"/>
         </activity>
     </application>
-
 </manifest>
