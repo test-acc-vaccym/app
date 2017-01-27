@@ -6,19 +6,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+
+import static com.gitlab.PCU.PCU.helper.Defaults.RequestCode;
+
+/**
+ * The Main Screen you see, when you are starting the app
+ */
 
 public class MainScreen extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK = 1;
-    private static final int REQUEST_CODE_SETTINGS = 2;
-    private static final int REQUEST_CODE_SERVER_SETTINGS = 3;
-
+    /**
+     * The System Keyguard Manager
+     */
     private KeyguardManager mKeyguardManager;
+    /**
+     * The Server Settings
+     */
     private Intent serverSettings;
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Also gets the keyguard manager, checks if device is secure (if not @link {@docRoot}/com/gitlab/PCU/PCU/DeviceNotSecure.html ist started)
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +51,19 @@ public class MainScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK:
+            case RequestCode.REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK:
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this, "Canceled", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case REQUEST_CODE_SETTINGS:
+            case RequestCode.REQUEST_CODE_SETTINGS:
                 if (resultCode == RESULT_OK) {
                     startActivity(serverSettings);
                 }
                 break;
-            case REQUEST_CODE_SERVER_SETTINGS:
+            case RequestCode.REQUEST_CODE_SERVER_SETTINGS:
                 if (resultCode == RESULT_OK) {
                     Intent intent = new Intent(this, ServerSettingsActivity.class);
                     startActivity(intent);
@@ -90,14 +104,14 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void onClickSettings(MenuItem item) {
-        showAuthenticationScreen(REQUEST_CODE_SETTINGS);
+        showAuthenticationScreen(RequestCode.REQUEST_CODE_SETTINGS);
     }
 
     public void onClickServerSettings(MenuItem item) {
-        showAuthenticationScreen(REQUEST_CODE_SERVER_SETTINGS);
+        showAuthenticationScreen(RequestCode.REQUEST_CODE_SERVER_SETTINGS);
     }
 
     public void onClickFabMain(View view) {
-        showAuthenticationScreen(REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
+        showAuthenticationScreen(RequestCode.REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
     }
 }

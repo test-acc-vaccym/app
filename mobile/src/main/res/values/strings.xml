@@ -94,4 +94,7 @@
     <string name="default_name">Server name</string>
     <string name="title_activity_server_edit">Edit Server</string>
     <string name="default_desc">No description</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_unlock">UnlockActivity</string>
 </resources>

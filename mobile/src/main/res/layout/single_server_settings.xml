@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="@string/cast_tracks_chooser_dialog_cancel"
+        android:text="@string/cancel"
         android:textAlignment="center"/>
 
 </LinearLayout>

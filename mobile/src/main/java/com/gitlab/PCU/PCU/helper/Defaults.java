@@ -30,6 +30,9 @@ public final class Defaults {
     }
 
     public static final class RequestCode {
+        public static final int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK = 1;
+        public static final int REQUEST_CODE_SETTINGS = 2;
+        public static final int REQUEST_CODE_SERVER_SETTINGS = 3;
         public static final int EDIT_SERVER = 4;
     }
 }
