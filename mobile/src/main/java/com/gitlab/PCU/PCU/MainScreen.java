@@ -48,6 +48,13 @@ public class MainScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    /**
+     *
+     * @param requestCode Code for the request
+     * @param resultCode Resulted Code
+     * @param data intent with is done
+     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
