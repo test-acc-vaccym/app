@@ -6,6 +6,6 @@
 /build
 /captures
 .externalNativeBuild
-.gradle
+/.gradle
 /.idea/markdown-navigator*
 /.idea/misc.xml
