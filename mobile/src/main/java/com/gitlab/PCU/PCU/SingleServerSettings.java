@@ -33,7 +33,7 @@ public class SingleServerSettings extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_server_settings);
+        setContentView(R.layout.activity_single_server_settings);
         serverSettingsStore = getIntent().getParcelableExtra("in");
         buildViews();
     }
@@ -42,7 +42,7 @@ public class SingleServerSettings extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.single_server_settings);
-        relativeLayout.setAlpha((float) 0.2);
+        relativeLayout.setAlpha(0);
         relativeLayout.animate().alpha(1).setDuration(500).start();
     }
 
@@ -268,12 +268,12 @@ public class SingleServerSettings extends AppCompatActivity {
             port.setAlpha(0);
             port.animate().alpha(1).setDuration(500).start();
         } else {
-            desc_port.setVisibility(View.GONE);
-            port.setVisibility(View.GONE);
             desc_port.setAlpha(1);
             desc_port.animate().alpha(0).setDuration(500).start();
             port.setAlpha(1);
             port.animate().alpha(0).setDuration(500).start();
+            desc_port.setVisibility(View.GONE);
+            port.setVisibility(View.GONE);
         }
     }
 }
