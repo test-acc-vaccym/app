@@ -13,17 +13,27 @@ public final class ServerSettingsStore implements Parcelable {
     private String name;
     private IP ip;
     private String desc;
+    private int port;
 
     public ServerSettingsStore(String name, IP ip, String desc) {
         this.name = name;
         this.ip = ip;
         this.desc = desc;
+        this.port = 25566;
+    }
+
+    public ServerSettingsStore(String name, IP ip, String desc, int port) {
+        this.name = name;
+        this.ip = ip;
+        this.desc = desc;
+        this.port = port;
     }
 
     protected ServerSettingsStore(Parcel in) {
         name = in.readString();
         ip = in.readParcelable(IP.class.getClassLoader());
         desc = in.readString();
+        port = in.readInt();
     }
 
     @Override
@@ -31,6 +41,7 @@ public final class ServerSettingsStore implements Parcelable {
         dest.writeString(name);
         dest.writeParcelable(ip, flags);
         dest.writeString(desc);
+        dest.writeInt(port);
     }
 
     @Override
@@ -98,4 +109,19 @@ public final class ServerSettingsStore implements Parcelable {
         this.desc = desc;
         return this;
     }
+
+    public int getPort() {
+        return port;
+    }
+
+    public ServerSettingsStore setPort(int port) {
+        this.port = port;
+        return this;
+    }
 }
+
+    public ServerSettingsStore(String name, IP ip, String desc) {
+        this.name = name;
+        this.ip = ip;
+        this.desc = desc;
+    }
