@@ -18,6 +18,7 @@ public class UnlockActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException ignored) {
         }
+        /*Intent service = new Intent(getApplicationContext(), BackgroundService.class);
+        startService(service);*/
     }
-
 }

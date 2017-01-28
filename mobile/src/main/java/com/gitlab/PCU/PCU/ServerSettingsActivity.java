@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.gitlab.PCU.PCU.helper.Defaults.ResultCode.RESULT_DELETE;
 
 public class ServerSettingsActivity extends AppCompatActivity {
 
@@ -120,6 +121,10 @@ public class ServerSettingsActivity extends AppCompatActivity {
                     String id = data.getStringExtra("id");
                     ServerCfg.write(getSharedPreferences("servers", 0), id, serverSettingsStore);
                     createViews();
+                } else if (resultCode == RESULT_DELETE && data != null) {
+                    String id = data.getStringExtra("id");
+                    ServerCfg.delete(getSharedPreferences("servers", 0), id);
+                    createViews();
                 }
                 break;
         }
@@ -140,7 +145,8 @@ public class ServerSettingsActivity extends AppCompatActivity {
          */
         @Override
         public void onClick(View v) {
-            startEdit(ServerCfg.read(getSharedPreferences("servers", 0), new Defaults.ServerVariable(getApplicationContext()), id), id);
+            ServerSettingsStore serverSettingsStore = ServerCfg.read(getSharedPreferences("servers", 0), new Defaults.ServerVariable(getApplicationContext()), id);
+            startEdit(serverSettingsStore, id);
         }
     }
 }

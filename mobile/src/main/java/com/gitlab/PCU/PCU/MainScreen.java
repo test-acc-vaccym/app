@@ -112,6 +112,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void onClickFabMain(View view) {
-        showAuthenticationScreen(RequestCode.REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
+        //showAuthenticationScreen(RequestCode.REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
+        startActivity(new Intent(getApplicationContext(), UnlockActivity.class));
     }
 }

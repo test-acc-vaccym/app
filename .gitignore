@@ -8,3 +8,4 @@
 .externalNativeBuild
 .gradle
 /.idea/markdown-navigator*
+/.idea/misc.xml

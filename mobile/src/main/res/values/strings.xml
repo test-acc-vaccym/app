@@ -96,5 +96,11 @@
     <string name="default_desc">No description</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_unlock">UnlockActivity</string>
+    <string name="title_activity_unlock">Unlock</string>
+    <string name="really_delete">Do you really want to delete this server?</string>
+    <string name="delete">Delete</string>
+    <string name="advanced_settings">Anvanced settings</string>
+    <string name="port">Port number</string>
+    <string name="desc_desc">Description</string>
+    <string name="desc_ip">Server IP</string>
 </resources>

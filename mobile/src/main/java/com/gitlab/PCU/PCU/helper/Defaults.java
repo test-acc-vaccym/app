@@ -35,4 +35,8 @@ public final class Defaults {
         public static final int REQUEST_CODE_SERVER_SETTINGS = 3;
         public static final int EDIT_SERVER = 4;
     }
+
+    public static final class ResultCode {
+        public static final int RESULT_DELETE = 2;
+    }
 }

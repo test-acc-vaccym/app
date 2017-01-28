@@ -1,5 +1,6 @@
 package com.gitlab.PCU.PCU.helper;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.util.ArrayMap;
 
@@ -7,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -63,6 +63,7 @@ public final class ServerCfg {
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
     public static void write(SharedPreferences sharedPreferences, final String serverID, final ServerSettingsStore serverSettingsStore) {
         String json = sharedPreferences.getString("servers", "{}");
         JSONObject jsonObject;
@@ -82,14 +83,14 @@ public final class ServerCfg {
                 server.put("name", serverSettingsStore.getName());
                 int[] ip = serverSettingsStore.getIp().getInt();
                 server.put("ip_a", ip[0]);
-                server.put("ip_a", ip[1]);
-                server.put("ip_a", ip[2]);
-                server.put("ip_a", ip[3]);
+                server.put("ip_b", ip[1]);
+                server.put("ip_c", ip[2]);
+                server.put("ip_d", ip[3]);
                 server.put("desc", serverSettingsStore.getDesc());
             } else {
                 jsonObject.put(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME, new JSONObject().put(serverID, new JSONObject()));
             }
-            sharedPreferences.edit().putString("servers", jsonObject.toString()).apply();
+            sharedPreferences.edit().putString("servers", jsonObject.toString()).commit();
         } catch (JSONException ignored) {
         }
     }
@@ -117,5 +118,25 @@ public final class ServerCfg {
         } catch (JSONException ignored) {
         }
         return new ArrayMap<>();
+    }
+
+    public static void delete(SharedPreferences sharedPreferences, final String serverID) {
+        String json = sharedPreferences.getString("servers", "{}");
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(new JSONTokener(json));
+
+
+            if (jsonObject.has(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME)) {
+                JSONObject servers = jsonObject.getJSONObject(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME);
+                if (servers.has(serverID)) {
+                    servers.remove(serverID);
+                }
+            } else {
+                jsonObject.put(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME, new JSONObject().put(serverID, new JSONObject()));
+            }
+            sharedPreferences.edit().putString("servers", jsonObject.toString()).apply();
+        } catch (JSONException ignored) {
+        }
     }
 }
