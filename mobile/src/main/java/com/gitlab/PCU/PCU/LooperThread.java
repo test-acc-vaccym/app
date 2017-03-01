@@ -1,5 +1,7 @@
 package com.gitlab.PCU.PCU;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,6 +14,12 @@ class LooperThread extends Thread implements Runnable {
     private static final int SERVERPORT = 25566;
     private ServerSocket serverSocket;
     private Logger logger = Logger.getGlobal();
+    private Context context;
+
+    LooperThread(Context context) {
+        super();
+        this.context = context;
+    }
 
     public void run() {
         loop();
@@ -29,7 +37,7 @@ class LooperThread extends Thread implements Runnable {
 
                 logger.log(Level.INFO, "gotcha!");
 
-                CommThread commThread = new CommThread(socket);
+                CommThread commThread = new CommThread(context, socket);
                 commThread.start();
             } catch (IOException e) {
                 e.printStackTrace();

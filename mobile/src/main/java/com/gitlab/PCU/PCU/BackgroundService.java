@@ -10,10 +10,10 @@ public class BackgroundService extends Service {
     private LooperThread looperThread;
 
     public BackgroundService() {
-        looperThread = new LooperThread();
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
+        looperThread = new LooperThread(getApplicationContext());
         looperThread.start();
         return START_REDELIVER_INTENT;
     }
