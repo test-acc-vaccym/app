@@ -119,9 +119,3 @@ public final class ServerSettingsStore implements Parcelable {
         return this;
     }
 }
-
-    public ServerSettingsStore(String name, IP ip, String desc) {
-        this.name = name;
-        this.ip = ip;
-        this.desc = desc;
-    }

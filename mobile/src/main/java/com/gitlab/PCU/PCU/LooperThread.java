@@ -1,27 +1,39 @@
 package com.gitlab.PCU.PCU;
 
-@SuppressWarnings("WeakerAccess")
-class LooperThread extends Thread {
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    private boolean stop = false;
+@SuppressWarnings("WeakerAccess")
+class LooperThread extends Thread implements Runnable {
+
+    private static final int SERVERPORT = 25566;
+    private ServerSocket serverSocket;
+    private Logger logger = Logger.getGlobal();
 
     public void run() {
-        while (!stop) {
-            loop();
-        }
-    }
-
-    public void stopLoop() {
-        stop = true;
+        loop();
     }
 
     private void loop() {
-        System.out.println("Hey!");
         try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            // Restore interrupt status.
-            Thread.currentThread().interrupt();
+            serverSocket = new ServerSocket(SERVERPORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
+                Socket socket = serverSocket.accept();
+
+                logger.log(Level.INFO, "gotcha!");
+
+                CommThread commThread = new CommThread(socket);
+                commThread.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import static com.gitlab.PCU.PCU.helper.Defaults.RequestCode;
+import static com.gitlab.PCU.PCU.helper.StaticMethods.isServiceRunning;
 
 /**
  * The Main Screen you see, when you are starting the app
@@ -46,6 +47,16 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isServiceRunning(getApplicationContext(), BackgroundService.class)) {
+            //start the service
+            Intent service = new Intent(getApplicationContext(), BackgroundService.class);
+            getApplication().startService(service);
+        }
     }
 
     /**

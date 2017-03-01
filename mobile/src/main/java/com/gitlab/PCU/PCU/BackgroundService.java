@@ -14,15 +14,14 @@ public class BackgroundService extends Service {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        looperThread.setDaemon(true);
         looperThread.start();
         return START_REDELIVER_INTENT;
     }
 
     @Override
     public void onDestroy() {
+        looperThread.interrupt();
         super.onDestroy();
-        looperThread.stopLoop();
     }
 
     @Nullable
