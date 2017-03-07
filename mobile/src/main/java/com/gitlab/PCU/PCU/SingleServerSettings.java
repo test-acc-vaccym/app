@@ -1,14 +1,18 @@
 package com.gitlab.PCU.PCU;
 
+import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,7 +37,7 @@ public class SingleServerSettings extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_server_settings);
+        setContentView(R.layout.single_server_settings);
         serverSettingsStore = getIntent().getParcelableExtra("in");
         buildViews();
     }
@@ -258,22 +262,44 @@ public class SingleServerSettings extends AppCompatActivity {
     public void onAdvancedSettings(View v) {
         boolean isChecked = ((CheckBox) v).isChecked();
 
-        TextView desc_port = (TextView) findViewById(R.id.desc_port);
-        EditText port = (EditText) findViewById(R.id.edit_port);
+        final TextView desc_port = (TextView) findViewById(R.id.desc_port);
+        final EditText port = (EditText) findViewById(R.id.edit_port);
         if (isChecked) {
             desc_port.setVisibility(View.VISIBLE);
             port.setVisibility(View.VISIBLE);
             desc_port.setAlpha(0);
-            desc_port.animate().alpha(1).setDuration(500).start();
+            desc_port.animate().alpha(1).setDuration(500).setListener(new SAnimListener(null)).start();
             port.setAlpha(0);
-            port.animate().alpha(1).setDuration(500).start();
+            port.animate().alpha(1).setDuration(500).setListener(new SAnimListener(null)).start();
         } else {
             desc_port.setAlpha(1);
-            desc_port.animate().alpha(0).setDuration(500).start();
+            desc_port.animate().alpha(0).setDuration(500).setListener(new SAnimListener(desc_port)).start();
             port.setAlpha(1);
-            port.animate().alpha(0).setDuration(500).start();
-            desc_port.setVisibility(View.GONE);
-            port.setVisibility(View.GONE);
+            port.animate().alpha(0).setDuration(500).setListener(new SAnimListener(port)).start();
+        }
+    }
+
+    private class SAnimListener implements Animator.AnimatorListener {
+        private View view;
+
+        public SAnimListener(@Nullable View view) {
+            this.view = view;
+        }
+
+        public void onAnimationStart(Animator animation) {}
+
+        public void onAnimationEnd(Animator animation) {
+            if (view != null) {
+                view.setVisibility(View.GONE);
+            }
+        }
+
+        public void onAnimationRepeat(Animator animation) {}
+
+        public void onAnimationCancel(Animator animation) {
+            if (view != null) {
+                view.setVisibility(View.GONE);
+            }
         }
     }
 }
