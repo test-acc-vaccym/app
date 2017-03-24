@@ -6,14 +6,14 @@ import android.os.Parcelable;
 /**
  * Created by tim on 19.01.17.
  */
+public class ServerSettingsStore implements Parcelable {
+    private String name = "null";
 
-@SuppressWarnings("WeakerAccess")
-public final class ServerSettingsStore implements Parcelable {
+    private IP ip = Defaults.ServerStatic.INSTANCE.getIP();
 
-    private String name;
-    private IP ip;
-    private String desc;
-    private int port;
+    private String desc = "null";
+
+    private Integer port = 25566;
 
     public ServerSettingsStore(String name, IP ip, String desc) {
         this.name = name;
@@ -22,14 +22,14 @@ public final class ServerSettingsStore implements Parcelable {
         this.port = 25566;
     }
 
-    public ServerSettingsStore(String name, IP ip, String desc, int port) {
+    public ServerSettingsStore(String name, IP ip, String desc, Integer port) {
         this.name = name;
         this.ip = ip;
         this.desc = desc;
         this.port = port;
     }
 
-    protected ServerSettingsStore(Parcel in) {
+    public ServerSettingsStore(Parcel in) {
         name = in.readString();
         ip = in.readParcelable(IP.class.getClassLoader());
         desc = in.readString();
@@ -49,7 +49,7 @@ public final class ServerSettingsStore implements Parcelable {
         return 0;
     }
 
-    public static final Creator<ServerSettingsStore> CREATOR = new Creator<ServerSettingsStore>() {
+    public static final Parcelable.Creator<ServerSettingsStore> CREATOR = new Parcelable.Creator<ServerSettingsStore>() {
         @Override
         public ServerSettingsStore createFromParcel(Parcel in) {
             return new ServerSettingsStore(in);
@@ -79,22 +79,19 @@ public final class ServerSettingsStore implements Parcelable {
         return this;
     }
 
-    public void modifyIP(IPPart ipPart, int newVal) {
-        int[] iIP = ip.getInt();
+    public ServerSettingsStore modifyIP(IPPart ipPart, Integer newVal) {
+        Integer[] iIP = ip.getInt();
         switch (ipPart) {
             case A:
                 ip = new IP(newVal, iIP[1], iIP[2], iIP[3]);
-                break;
             case B:
                 ip = new IP(iIP[0], newVal, iIP[2], iIP[3]);
-                break;
             case C:
                 ip = new IP(iIP[0], iIP[1], newVal, iIP[3]);
-                break;
             case D:
                 ip = new IP(iIP[0], iIP[1], iIP[2], newVal);
-                break;
         }
+        return this;
     }
 
     public enum IPPart {

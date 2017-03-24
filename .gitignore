@@ -211,3 +211,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+libs/
+src/androidTest/
+src/main/res/layout-xlarge/
+src/main/res/mipmap/
+src/test/
