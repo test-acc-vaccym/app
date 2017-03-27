@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.gitlab.PCU.PCU.ServerSettings.ServerSettingsActivity
 
 import com.gitlab.PCU.PCU.helper.Defaults.RequestCode
 import com.gitlab.PCU.PCU.helper.StaticMethods.isServiceRunning

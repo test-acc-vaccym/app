@@ -79,13 +79,13 @@ object ServerCfg {
                 }
 
                 val server = servers.getJSONObject(serverID)
-                server.put("name", serverSettingsStore.getName())
-                val ip = serverSettingsStore.getIp().int
+                server.put("name", serverSettingsStore.name)
+                val ip = serverSettingsStore.ip.int
                 server.put("ip_a", ip[0])
                 server.put("ip_b", ip[1])
                 server.put("ip_c", ip[2])
                 server.put("ip_d", ip[3])
-                server.put("desc", serverSettingsStore.getDesc())
+                server.put("desc", serverSettingsStore.desc)
             } else {
                 jsonObject.put(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME, JSONObject().put(serverID, JSONObject()))
             }

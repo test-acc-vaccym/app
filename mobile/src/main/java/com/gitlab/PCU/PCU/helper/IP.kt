@@ -6,60 +6,33 @@ import android.os.Parcelable
 /**
  * Created by tim on 13.01.17.
  */
-data class IP : Parcelable {
-    private val a: Int?
-    private val b: Int?
-    private val c: Int?
-    private val d: Int?
+data class IP(val p_a: Int = 0, val p_b: Int = 0, val p_c: Int = 0, val p_d: Int = 0) : Parcelable{
+    private var a: Int = p_a
 
-    constructor(a: Int?, b: Int?, c: Int?, d: Int?) {
-        var a = a
-        var b = b
-        var c = c
-        var d = d
-        if (!(a >= 0 && a <= 255)) {
-            a = 0
-        }
-        if (!(b >= 0 && b <= 255)) {
-            b = 0
-        }
-        if (!(c >= 0 && c <= 255)) {
-            c = 0
-        }
-        if (!(d >= 0 && d <= 255)) {
-            d = 0
-        }
-        this.a = a
-        this.b = b
-        this.c = c
-        this.d = d
-    }
+    private var b: Int = p_b
 
-    protected constructor(`in`: Parcel) {}
+    private var c: Int = p_c
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {}
-
-    override fun describeContents(): Int {
-        return 0
-    }
+    private var d: Int = p_d
 
     val int: Array<Int>
-        get() = arrayOf<Int>(a, b, c, d)
-
-    override fun toString(): String {
-        return Integer.toString(a!!) + "." + Integer.toString(b!!) + "." + Integer.toString(c!!) + "." + Integer.toString(d!!)
-    }
+    get() = arrayOf<Int>(a, b, c, d)
 
     companion object {
-
-        val CREATOR: Parcelable.Creator<IP> = object : Parcelable.Creator<IP> {
-            override fun createFromParcel(`in`: Parcel): IP {
-                return IP(`in`)
-            }
-
-            override fun newArray(size: Int): Array<IP> {
-                return arrayOfNulls(size)
-            }
+        @JvmField val CREATOR: Parcelable.Creator<IP> = object : Parcelable.Creator<IP> {
+            override fun createFromParcel(source: Parcel): IP = IP(source)
+            override fun newArray(size: Int): Array<IP?> = arrayOfNulls(size)
         }
+    }
+
+    constructor(source: Parcel) : this(source.readInt(), source.readInt(), source.readInt(), source.readInt())
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeInt(a)
+        dest?.writeInt(b)
+        dest?.writeInt(c)
+        dest?.writeInt(d)
     }
 }

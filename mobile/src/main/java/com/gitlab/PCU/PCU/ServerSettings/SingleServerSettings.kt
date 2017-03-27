@@ -1,4 +1,4 @@
-package com.gitlab.PCU.PCU
+package com.gitlab.PCU.PCU.ServerSettings
 
 import android.animation.Animator
 import android.app.Activity
@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
+import com.gitlab.PCU.PCU.R
 import com.gitlab.PCU.PCU.helper.Defaults
 import com.gitlab.PCU.PCU.helper.Defaults.ResultCode.RESULT_DELETE
 import com.gitlab.PCU.PCU.helper.InputFilterMinMax
@@ -55,7 +56,6 @@ class SingleServerSettings : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable) {}
         })
-
 
         edit_desc.filters = arrayOf<InputFilter>(MaxLineFilter(5))
         edit_desc.setText(serverSettingsStore.desc)
@@ -101,7 +101,7 @@ class SingleServerSettings : AppCompatActivity() {
                     if (s.toString() == "") {
                         serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.B, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, Integer.parseInt(s.toString()))
+                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.B, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }
@@ -121,7 +121,7 @@ class SingleServerSettings : AppCompatActivity() {
                     if (s.toString() == "") {
                         serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.C, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, Integer.parseInt(s.toString()))
+                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.C, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }
@@ -141,7 +141,7 @@ class SingleServerSettings : AppCompatActivity() {
                     if (s.toString() == "") {
                         serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.D, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, Integer.parseInt(s.toString()))
+                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.D, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }
