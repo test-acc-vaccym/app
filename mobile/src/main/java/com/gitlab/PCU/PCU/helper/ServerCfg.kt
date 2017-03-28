@@ -1,9 +1,7 @@
 package com.gitlab.PCU.PCU.helper
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.util.ArrayMap
-
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -50,21 +48,21 @@ object ServerCfg {
                     desc = serverVariable.DESC
                 }
 
-                return ServerSettingsStore(name, ip, desc)
+                return ServerSettingsStore(serverID, name, ip, desc)
 
             } else {
                 jsonObject.put(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME, JSONObject().put(serverID, JSONObject()))
-                return serverVariable.SERVER_SETTINGS_STORE
+                return serverVariable.newServerSettingsStore()
             }
         } catch (ignored: JSONException) {
-            return serverVariable.SERVER_SETTINGS_STORE
+            return serverVariable.newServerSettingsStore()
         }
 
     }
 
-    @SuppressLint("CommitPrefEdits")
-    fun write(sharedPreferences: SharedPreferences, serverID: String, serverSettingsStore: ServerSettingsStore) {
-        val json = sharedPreferences.getString("servers", "{}")
+    fun write(sharedPreferences: SharedPreferences, serverSettingsStore: ServerSettingsStore) {
+        val json: String = sharedPreferences.getString("servers", "{}")
+        val serverID: String = serverSettingsStore.id
         val jsonObject: JSONObject
         try {
             jsonObject = JSONObject(JSONTokener(json))
@@ -89,13 +87,13 @@ object ServerCfg {
             } else {
                 jsonObject.put(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME, JSONObject().put(serverID, JSONObject()))
             }
-            sharedPreferences.edit().putString("servers", jsonObject.toString()).commit()
+            sharedPreferences.edit().putString("servers", jsonObject.toString()).apply()
         } catch (ignored: JSONException) {
         }
 
     }
 
-    fun list(sharedPreferences: SharedPreferences): ArrayMap<String, Array<String>> {
+    fun list(sharedPreferences: SharedPreferences): ArrayMap<String, Pair<String, String>> {
         val json = sharedPreferences.getString("servers", "{}")
         val jsonObject: JSONObject
         try {
@@ -104,12 +102,12 @@ object ServerCfg {
             if (jsonObject.has(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME)) {
                 val servers = jsonObject.getJSONObject(Defaults.ServerStatic.SERVER_JSON_OBJECT_NAME)
                 val iterator = servers.keys()
-                val stringArrayList = ArrayMap<String, Array<String>>()
+                val stringArrayList = ArrayMap<String, Pair<String, String>>()
                 while (iterator.hasNext()) {
                     val name = iterator.next()
                     try {
                         val server = servers.getJSONObject(name)
-                        stringArrayList.put(name, arrayOf(server.getString("name"), server.getString("desc")))
+                        stringArrayList.put(name, Pair(server.getString("name"), server.getString("desc")))
                     } catch (ignored: JSONException) {
                     }
 

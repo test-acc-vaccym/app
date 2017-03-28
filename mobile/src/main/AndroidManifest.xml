@@ -42,7 +42,7 @@
             android:theme="@style/FullscreenTheme"
             android:process=":PCUAppProcess"/>
         <activity
-            android:name=".ServerSettings.ServerSettingsActivity"
+            android:name=".ServerSettings.ListActivity"
             android:label="@string/title_activity_server_settings"
             android:parentActivityName=".MainScreen"
             android:theme="@style/AppTheme.NoActionBar"
@@ -52,14 +52,14 @@
                 android:value=".MainScreen"/>
         </activity>
         <activity
-            android:name=".ServerSettings.SingleServerSettings"
+            android:name=".ServerSettings.EditActivity"
             android:label="@string/title_activity_server_edit"
-            android:parentActivityName=".ServerSettings.ServerSettingsActivity"
+            android:parentActivityName=".ServerSettings.ListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:process=":PCUAppProcess">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ServerSettings.ServerSettingsActivity"/>
+                android:value=".ServerSettings.ListActivity"/>
         </activity>
         <activity
             android:name=".UnlockActivity"

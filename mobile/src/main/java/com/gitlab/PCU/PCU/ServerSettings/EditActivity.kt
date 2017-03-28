@@ -14,7 +14,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import com.gitlab.PCU.PCU.R
-import com.gitlab.PCU.PCU.helper.Defaults
 import com.gitlab.PCU.PCU.helper.Defaults.ResultCode.RESULT_DELETE
 import com.gitlab.PCU.PCU.helper.InputFilterMinMax
 import com.gitlab.PCU.PCU.helper.MaxLineFilter
@@ -25,16 +24,18 @@ import kotlinx.android.synthetic.main.single_server_settings.*
  * Created by tim on 20.01.17.
  */
 
-class SingleServerSettings : AppCompatActivity() {
+class EditActivity : AppCompatActivity() {
 
-    protected var serverSettingsStore: ServerSettingsStore = Defaults.ServerStatic.SERVER_SETTINGS_STORE
+    protected var serverSettingsStore: ServerSettingsStore? = null//Defaults.ServerStatic.SERVER_SETTINGS_STORE
     protected var changed = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(single_server_settings)
         serverSettingsStore = intent.getParcelableExtra<ServerSettingsStore>("in")
-        buildViews()
+        if (serverSettingsStore != null) {
+            buildViews(serverSettingsStore!!)
+        }
     }
 
     public override fun onResume() {
@@ -43,14 +44,14 @@ class SingleServerSettings : AppCompatActivity() {
         single_server_settings.animate().alpha(1f).setDuration(500).start()
     }
 
-    private fun buildViews() {
+    private fun buildViews(lServerSettingsStore: ServerSettingsStore) {
         ss_edit_name.filters = arrayOf<InputFilter>(MaxLineFilter(1))
-        ss_edit_name.setText(serverSettingsStore.name)
+        ss_edit_name.setText(lServerSettingsStore.name)
         ss_edit_name.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                serverSettingsStore.name = s.toString()
+                lServerSettingsStore.name = s.toString()
                 changed = true
             }
 
@@ -58,12 +59,12 @@ class SingleServerSettings : AppCompatActivity() {
         })
 
         edit_desc.filters = arrayOf<InputFilter>(MaxLineFilter(5))
-        edit_desc.setText(serverSettingsStore.desc)
+        edit_desc.setText(lServerSettingsStore.desc)
         edit_desc.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                serverSettingsStore.desc = s.toString()
+                lServerSettingsStore.desc = s.toString()
                 changed = true
             }
 
@@ -72,16 +73,16 @@ class SingleServerSettings : AppCompatActivity() {
 
         run {
             ip_a.filters = arrayOf<InputFilter>(MaxLineFilter(1))
-            ip_a.setText(String.format("%s", serverSettingsStore.ip.int[0]))
+            ip_a.setText(String.format("%s", lServerSettingsStore.ip.int[0]))
             ip_a.filters = arrayOf<InputFilter>(InputFilterMinMax(0, 255))
             ip_a.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if (s.toString() == "") {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, 0)
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, Integer.parseInt(s.toString()))
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.A, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }
@@ -92,16 +93,16 @@ class SingleServerSettings : AppCompatActivity() {
 
         run {
             ip_b.filters = arrayOf<InputFilter>(MaxLineFilter(1))
-            ip_b.setText(String.format("%s", serverSettingsStore.ip.int[1]))
+            ip_b.setText(String.format("%s", lServerSettingsStore.ip.int[1]))
             ip_b.filters = arrayOf<InputFilter>(InputFilterMinMax(0, 255))
             ip_b.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if (s.toString() == "") {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.B, 0)
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.B, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.B, Integer.parseInt(s.toString()))
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.B, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }
@@ -112,16 +113,16 @@ class SingleServerSettings : AppCompatActivity() {
 
         run {
             ip_c.filters = arrayOf<InputFilter>(MaxLineFilter(1))
-            ip_c.setText(String.format("%s", serverSettingsStore.ip.int[2]))
+            ip_c.setText(String.format("%s", lServerSettingsStore.ip.int[2]))
             ip_c.filters = arrayOf<InputFilter>(InputFilterMinMax(0, 255))
             ip_c.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if (s.toString() == "") {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.C, 0)
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.C, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.C, Integer.parseInt(s.toString()))
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.C, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }
@@ -132,16 +133,16 @@ class SingleServerSettings : AppCompatActivity() {
 
         run {
             ip_d.filters = arrayOf<InputFilter>(MaxLineFilter(1))
-            ip_d.setText(String.format("%s", serverSettingsStore.ip.int[3]))
+            ip_d.setText(String.format("%s", lServerSettingsStore.ip.int[3]))
             ip_d.filters = arrayOf<InputFilter>(InputFilterMinMax(0, 255))
             ip_d.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if (s.toString() == "") {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.D, 0)
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.D, 0)
                     } else {
-                        serverSettingsStore.modifyIP(ServerSettingsStore.IPPart.D, Integer.parseInt(s.toString()))
+                        lServerSettingsStore.modifyIP(ServerSettingsStore.IPPart.D, Integer.parseInt(s.toString()))
                     }
                     changed = true
                 }

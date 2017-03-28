@@ -11,7 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.gitlab.PCU.PCU.ServerSettings.ServerSettingsActivity
+import com.gitlab.PCU.PCU.ServerSettings.ListActivity
 
 import com.gitlab.PCU.PCU.helper.Defaults.RequestCode
 import com.gitlab.PCU.PCU.helper.StaticMethods.isServiceRunning
@@ -27,7 +27,12 @@ class MainScreen : AppCompatActivity() {
      */
     private var mKeyguardManager: KeyguardManager? = null
     /**
-     * The Server Settings
+     * The Settings
+     */
+    private var settings: Intent? = null
+
+    /**
+     * The Settings
      */
     private var serverSettings: Intent? = null
 
@@ -45,7 +50,8 @@ class MainScreen : AppCompatActivity() {
             val intent = Intent(this, DeviceNotSecure::class.java)
             startActivity(intent)
         }
-        serverSettings = Intent(this, SettingsActivity::class.java)
+        settings = Intent(applicationContext, SettingsActivity::class.java)
+        serverSettings = Intent(applicationContext, ListActivity::class.java)
         setContentView(R.layout.activity_main_screen)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -61,7 +67,6 @@ class MainScreen : AppCompatActivity() {
     }
 
     /**
-
      * @param requestCode Code for the request
      * *
      * @param resultCode Resulted Code
@@ -77,11 +82,10 @@ class MainScreen : AppCompatActivity() {
                 Toast.makeText(this, "Canceled", Toast.LENGTH_LONG).show()
             }
             RequestCode.REQUEST_CODE_SETTINGS -> if (resultCode == Activity.RESULT_OK) {
-                startActivity(serverSettings)
+                startActivity(settings)
             }
             RequestCode.REQUEST_CODE_SERVER_SETTINGS -> if (resultCode == Activity.RESULT_OK) {
-                val intent = Intent(this, ServerSettingsActivity::class.java)
-                startActivity(intent)
+                startActivity(serverSettings)
             }
         }
     }

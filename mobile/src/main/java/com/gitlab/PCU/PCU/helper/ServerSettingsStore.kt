@@ -6,15 +6,8 @@ import android.os.Parcelable
 /**
  * Created by tim on 19.01.17.
  */
-data class ServerSettingsStore(val p_name: String = "No Name (Error)", val p_ip: IP = Defaults.ServerStatic.IP,
-                               val p_desc: String = "No description (Error)", val p_port: Int = 25566) : Parcelable{
-    var name = p_name
-
-    var ip = p_ip
-
-    var desc = p_desc
-
-    var port = p_port
+data class ServerSettingsStore(var id: String, var name: String = "No Name", var ip: IP = Defaults.ServerStatic.IP,
+                               var desc: String = "No description", var port: Int = 25566) : Parcelable {
 
     fun modifyIP(ipPart: IPPart, newVal: Int?): ServerSettingsStore {
         val iIP = ip.int
@@ -39,6 +32,7 @@ data class ServerSettingsStore(val p_name: String = "No Name (Error)", val p_ip:
         return this
     }
 
+
     enum class IPPart {
         A, B, C, D
     }
@@ -50,14 +44,15 @@ data class ServerSettingsStore(val p_name: String = "No Name (Error)", val p_ip:
         }
     }
 
-    constructor(source: Parcel) : this(source.readString(), source.readParcelable<IP>(IP::class.java.classLoader), source.readString(), source.readInt())
+    constructor(source: Parcel) : this(source.readString(), source.readString(), source.readParcelable<IP>(IP::class.java.classLoader), source.readString(), source.readInt())
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeString(p_name)
-        dest?.writeParcelable(p_ip, 0)
-        dest?.writeString(p_desc)
-        dest?.writeInt(p_port)
+        dest?.writeString(id)
+        dest?.writeString(name)
+        dest?.writeParcelable(ip, 0)
+        dest?.writeString(desc)
+        dest?.writeInt(port)
     }
 }
