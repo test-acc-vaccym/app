@@ -14,8 +14,10 @@ class ServerView(val appContext: Context) : LinearLayout(appContext) {
         get() = descView
     var id: String? = null
     var editOCL: ListActivity.EditOCL? = null
-
-    init {
-
-    }
+        set(value: ListActivity.EditOCL?) {
+            if (value != null) {
+                editOCL = value
+                id = value.getId()
+            }
+        }
 }
