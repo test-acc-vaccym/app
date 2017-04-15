@@ -1,4 +1,4 @@
-package com.github.PCU.android.helper
+package com.github.PCUnlocker.app.helper
 
 import android.text.InputFilter
 import android.text.Spanned

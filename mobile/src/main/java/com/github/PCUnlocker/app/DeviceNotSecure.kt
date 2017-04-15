@@ -1,4 +1,4 @@
-package com.github.PCU.android
+package com.github.PCUnlocker.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,7 @@ class DeviceNotSecure : AppCompatActivity() {
         setContentView(R.layout.activity_device_not_secure)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun exit(v: View) {
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_HOME)

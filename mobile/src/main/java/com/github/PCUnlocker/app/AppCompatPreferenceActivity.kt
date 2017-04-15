@@ -1,4 +1,4 @@
-package com.github.PCU.android
+package com.github.PCUnlocker.app
 
 import android.content.res.Configuration
 import android.os.Bundle

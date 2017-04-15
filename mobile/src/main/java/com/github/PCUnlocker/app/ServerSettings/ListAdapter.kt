@@ -1,9 +1,9 @@
-package com.github.PCU.android.ServerSettings
+package com.github.PCUnlocker.app.ServerSettings
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.github.PCU.android.ServerSettings.ListActivity.EditOCL
-import com.github.PCU.android.helper.PairList
+import com.github.PCUnlocker.app.ServerSettings.ListActivity.EditOCL
+import com.github.PCUnlocker.app.helper.PairList
 
 /**
  * Created by tim on 26.03.17.

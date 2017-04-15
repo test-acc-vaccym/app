@@ -1,22 +1,22 @@
-package com.github.PCU.android.helper
+package com.github.PCUnlocker.app.helper
 
 import android.content.Context
 import android.util.ArrayMap
 
-import com.github.PCU.android.R
-import com.github.PCU.android.Tools
+import com.github.PCUnlocker.app.R
+import com.github.PCUnlocker.app.Tools
 import java.util.*
 
 /**
  * Created by tim on 24.01.17.
  */
 
-public class Defaults {
+class Defaults {
 
     class ServerVariable(val context: Context) {
 
-        public val NAME: String = context.getString(R.string.default_name)
-        public val DESC: String = context.resources.getString(R.string.default_desc)
+        val NAME: String = context.getString(R.string.default_name)
+        val DESC: String = context.resources.getString(R.string.default_desc)
 
         fun newServerSettingsStore(): ServerSettingsStore {
             val list: ArrayMap<String, Pair<String, String>> = ServerCfg.list(context.getSharedPreferences("servers", 0))
@@ -27,11 +27,11 @@ public class Defaults {
         }
     }
 
-    public object ServerStatic {
-        public val IP = IP(0, 0, 0, 0)
-        public val SERVER_JSON_OBJECT_NAME = "servers_test1"
-        public val NAME: String = "No Name"
-        public val DESC: String = "No Description"
+    object ServerStatic {
+        val IP = IP(0, 0, 0, 0)
+        val SERVER_JSON_OBJECT_NAME = "servers_test1"
+        val NAME: String = "No Name"
+        val DESC: String = "No Description"
         //public val SERVER_SETTINGS_STORE: ServerSettingsStore
 
         //init {
@@ -41,13 +41,13 @@ public class Defaults {
     }
 
     object RequestCode {
-        public val REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK = 1
-        public val REQUEST_CODE_SETTINGS = 2
-        public val REQUEST_CODE_SERVER_SETTINGS = 3
-        public val EDIT_SERVER = 4
+        val REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK = 1
+        val REQUEST_CODE_SETTINGS = 2
+        val REQUEST_CODE_SERVER_SETTINGS = 3
+        val EDIT_SERVER = 4
     }
 
     object ResultCode {
-        public val RESULT_DELETE = 2
+        val RESULT_DELETE = 2
     }
 }

@@ -1,4 +1,4 @@
-package com.github.PCU.android.helper
+package com.github.PCUnlocker.app.helper
 
 import android.content.SharedPreferences
 import android.util.ArrayMap

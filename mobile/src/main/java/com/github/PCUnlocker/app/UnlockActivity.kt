@@ -1,4 +1,4 @@
-package com.github.PCU.android
+package com.github.PCUnlocker.app
 
 import android.app.NotificationManager
 import android.content.Context

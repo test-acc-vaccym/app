@@ -1,4 +1,4 @@
-package com.github.PCU.android.ServerSettings
+package com.github.PCUnlocker.app.ServerSettings
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,10 +10,10 @@ import android.util.ArrayMap
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.github.PCU.android.R
-import com.github.PCU.android.Tools.generateString
-import com.github.PCU.android.helper.*
-import com.github.PCU.android.helper.Defaults.ResultCode.RESULT_DELETE
+import com.github.PCUnlocker.app.R
+import com.github.PCUnlocker.app.Tools.generateString
+import com.github.PCUnlocker.app.helper.*
+import com.github.PCUnlocker.app.helper.Defaults.ResultCode.RESULT_DELETE
 import kotlinx.android.synthetic.main.activity_server_settings.*
 import kotlinx.android.synthetic.main.content_server_settings.*
 import java.security.SecureRandom
@@ -53,6 +53,7 @@ class ListActivity : AppCompatActivity() {
         Log.d("dbg", "created Views")
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onFab(v: View) {
         val list: ArrayMap<String, Pair<String, String>> = ServerCfg.list(serverPreferences!!)
         val a_to_z: CharRange = CharRange('A', 'Z')

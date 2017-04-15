@@ -1,4 +1,4 @@
-package com.github.PCU.android.ServerSettings
+package com.github.PCUnlocker.app.ServerSettings
 
 import android.animation.Animator
 import android.app.Activity
@@ -14,12 +14,12 @@ import android.view.View.VISIBLE
 import android.view.View.GONE
 import android.view.animation.Animation
 import android.widget.CheckBox
-import com.github.PCU.android.R
-import com.github.PCU.android.helper.Defaults.ResultCode.RESULT_DELETE
-import com.github.PCU.android.helper.ExpandCollapseAnimation
-import com.github.PCU.android.helper.InputFilterMinMax
-import com.github.PCU.android.helper.MaxLineFilter
-import com.github.PCU.android.helper.ServerSettingsStore
+import com.github.PCUnlocker.app.R
+import com.github.PCUnlocker.app.helper.Defaults.ResultCode.RESULT_DELETE
+import com.github.PCUnlocker.app.helper.ExpandCollapseAnimation
+import com.github.PCUnlocker.app.helper.InputFilterMinMax
+import com.github.PCUnlocker.app.helper.MaxLineFilter
+import com.github.PCUnlocker.app.helper.ServerSettingsStore
 import kotlinx.android.synthetic.main.activity_edit.*
 
 
@@ -164,8 +164,8 @@ class EditActivity : AppCompatActivity() {
     fun delete() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage(R.string.really_delete)
-        builder.setNegativeButton(R.string.cancel) { dialog, which -> }
-        builder.setPositiveButton(R.string.delete) { dialog, which -> really_delete() }
+        builder.setNegativeButton(R.string.cancel) { _, _ -> }
+        builder.setPositiveButton(R.string.delete) { _, _ -> really_delete() }
         builder.show()
     }
 

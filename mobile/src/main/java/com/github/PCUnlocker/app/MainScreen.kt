@@ -1,4 +1,4 @@
-package com.github.PCU.android
+package com.github.PCUnlocker.app
 
 import android.app.Activity
 import android.app.KeyguardManager
@@ -10,9 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.github.PCU.android.ServerSettings.ListActivity
-import com.github.PCU.android.helper.Defaults.RequestCode
-import com.github.PCU.android.helper.StaticMethods.isServiceRunning
+import com.github.PCUnlocker.app.ServerSettings.ListActivity
+import com.github.PCUnlocker.app.helper.Defaults.RequestCode
+import com.github.PCUnlocker.app.helper.StaticMethods.isServiceRunning
 import kotlinx.android.synthetic.main.activity_main_screen.*
 
 /**
@@ -117,14 +117,17 @@ class MainScreen : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickSettings(item: MenuItem) {
         showAuthenticationScreen(RequestCode.REQUEST_CODE_SETTINGS)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickServerSettings(item: MenuItem) {
         showAuthenticationScreen(RequestCode.REQUEST_CODE_SERVER_SETTINGS)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onClickFabMain(view: View) {
         //showAuthenticationScreen(RequestCode.REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS_UNLOCK);
         startActivity(Intent(applicationContext, UnlockActivity::class.java))

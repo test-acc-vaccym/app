@@ -1,4 +1,4 @@
-package com.github.PCU.android.helper
+package com.github.PCUnlocker.app.helper
 
 import android.app.Activity
 import android.util.DisplayMetrics

@@ -1,4 +1,4 @@
-package com.github.PCU.android.ServerSettings
+package com.github.PCUnlocker.app.ServerSettings
 
 import android.content.Context
 import android.support.annotation.ColorInt
@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.github.PCU.android.R
+import com.github.PCUnlocker.app.R
 
 
 /**

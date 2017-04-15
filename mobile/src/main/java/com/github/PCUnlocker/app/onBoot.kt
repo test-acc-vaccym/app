@@ -1,10 +1,10 @@
-package com.github.PCU.android
+package com.github.PCUnlocker.app
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-import com.github.PCU.android.helper.StaticMethods.isServiceRunning
+import com.github.PCUnlocker.app.helper.StaticMethods.isServiceRunning
 
 /**
  * Created by tim on 27.01.17.
