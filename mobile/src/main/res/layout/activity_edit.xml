@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/single_server_settings"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ServerSettings.EditActivity">
+
+    <ScrollView
+        android:id="@+id/ssScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edit_server_accept"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/edit_server">
+
+            <TextView
+                android:text="@string/default_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/desc_name"/>
+
+            <EditText
+                android:id="@+id/ss_edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/default_name"
+                android:inputType="text|textAutoCorrect|textAutoComplete"
+                android:selectAllOnFocus="false"
+                android:maxLines="1"
+                android:layout_below="@id/desc_name"/>
+
+            <TextView
+                android:text="@string/desc_ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ss_edit_name"
+                android:id="@+id/desc_ip"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc_ip"
+                android:id="@+id/ll_ip">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:id="@+id/ip_a"
+                    android:layout_weight="1.0"
+                    tools:ignore="LabelFor"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:id="@+id/ip_b"
+                    android:layout_weight="1.0"
+                    tools:ignore="LabelFor"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:id="@+id/ip_c"
+                    android:layout_weight="1.0"
+                    tools:ignore="LabelFor"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:id="@+id/ip_d"
+                    android:layout_weight="1.0"
+                    tools:ignore="LabelFor"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"/>
+            </LinearLayout>
+
+            <CheckBox
+                android:text="@string/advanced_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/advanced_settings"
+                android:checked="false"
+                android:onClick="onAdvancedSettings"
+                android:layout_below="@id/ll_ip"/>
+
+            <RelativeLayout
+                android:id="@+id/port_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/advanced_settings"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/desc_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/port"
+                    android:gravity="bottom"/>
+
+                <EditText
+                    android:id="@+id/edit_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/port"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:selectAllOnFocus="true"
+                    android:layout_below="@id/desc_port"
+                    android:gravity="bottom"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:text="@string/desc_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/desc_desc"
+                android:layout_below="@+id/port_layout"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/edit_desc"
+                tools:ignore="InefficientWeight,LabelFor"
+                android:maxLines="6"
+                android:layout_below="@+id/desc_desc"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/edit_server_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:text="@string/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_delete"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_above="@+id/edit_server_cancel"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:id="@+id/edit_server_accept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/accept"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_above="@+id/button_delete"
+        android:layout_alignParentStart="true"/>
+</RelativeLayout>

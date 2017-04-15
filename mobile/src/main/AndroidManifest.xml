@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.gitlab.PCU.PCU">
+          package="com.github.PCU.android">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -16,7 +16,7 @@
         android:process=":PCUAppProcess"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainScreen"
+            android:name="com.github.PCU.android.MainScreen"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:process=":PCUAppProcess">
@@ -27,53 +27,53 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.github.PCU.android.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainScreen"
+            android:parentActivityName="com.github.PCU.android.MainScreen"
             android:process=":PCUAppProcess">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gitlab.PCU.PCU.MainScreen"/>
+                android:value="com.github.PCU.android.MainScreen"/>
         </activity>
         <activity
-            android:name=".DeviceNotSecure"
+            android:name="com.github.PCU.android.DeviceNotSecure"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_device_not_secure"
             android:theme="@style/FullscreenTheme"
             android:process=":PCUAppProcess"/>
         <activity
-            android:name=".ServerSettings.ListActivity"
+            android:name="com.github.PCU.android.ServerSettings.ListActivity"
             android:label="@string/title_activity_server_settings"
-            android:parentActivityName=".MainScreen"
+            android:parentActivityName="com.github.PCU.android.MainScreen"
             android:theme="@style/AppTheme.NoActionBar"
             android:process=":PCUAppProcess">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainScreen"/>
+                android:value="com.github.PCU.android.MainScreen"/>
         </activity>
         <activity
-            android:name=".ServerSettings.EditActivity"
+            android:name="com.github.PCU.android.ServerSettings.EditActivity"
             android:label="@string/title_activity_server_edit"
-            android:parentActivityName=".ServerSettings.ListActivity"
+            android:parentActivityName="com.github.PCU.android.ServerSettings.ListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:process=":PCUAppProcess">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ServerSettings.ListActivity"/>
+                android:value="com.github.PCU.android.ServerSettings.ListActivity"/>
         </activity>
         <activity
-            android:name=".UnlockActivity"
+            android:name="com.github.PCU.android.UnlockActivity"
             android:label="Unlock"
-            android:parentActivityName=".MainScreen"
+            android:parentActivityName="com.github.PCU.android.MainScreen"
             android:theme="@style/AppTheme.NoActionBar"
             android:process=":PCUAppProcess">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainScreen"/>
+                android:value="com.github.PCU.android.MainScreen"/>
         </activity>
 
         <receiver
-            android:name=".onBoot"
+            android:name="com.github.PCU.android.onBoot"
             android:enabled="true"
             android:exported="false"
             android:excludeFromRecents="true"
@@ -84,7 +84,7 @@
         </receiver>
 
         <service
-            android:name=".BackgroundService"
+            android:name="com.github.PCU.android.BackgroundService"
             android:enabled="true"
             android:excludeFromRecents="true"
             android:process=":BackgroundServiceProcess"

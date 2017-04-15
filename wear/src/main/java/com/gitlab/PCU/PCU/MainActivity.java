@@ -1,4 +1,4 @@
-package com.gitlab.PCU.PCU;
+package com.gitlab.PCU.android;
 
 import android.content.res.Resources;
 import android.os.Bundle;

@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.gitlab.PCU.PCU.MainScreen">
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.gitlab.PCU.android.MainScreen">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
